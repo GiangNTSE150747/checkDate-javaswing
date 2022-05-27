@@ -29,20 +29,20 @@ public class DateValidator {
     // year is valid or not.
     public static boolean isValidDate(int d,
             int m,
-            int y, StringBuilder sb) {
+            int y, StringBuilder sb, StringBuilder sbMsg) {
         // If year, month and day
         // are not in given range
         if (y > MAX_VALID_YR
                 || y < MIN_VALID_YR) {
-            sb.append("\nYear is not valid!!");
+            sb.append("\nInput data for Year is out of range!");
             return false;
         }
         if (m < 1 || m > 12) {
-            sb.append("\nMonth is not valid!!");
+            sb.append("\nInput data for Month is out of range!");
             return false;
         }
         if (d < 1 || d > 31) {
-            sb.append("\nDay is not valid!!");
+            sb.append("\nInput data for Day is out of range!");
             return false;
         }
 
@@ -50,9 +50,15 @@ public class DateValidator {
         // with leap year
         if (m == 2) {
             if (isLeap(y)) {
-                return (d <= 29);
+                if (!(d <= 29)){
+                    sbMsg.append("dd/mm/yy is NOT correct date time!");
+                    return true; 
+                }
             } else {
-                return (d <= 28);
+                if (!(d <= 28)){
+                    sbMsg.append("dd/mm/yy is NOT correct date time!");
+                    return true;
+                }
             }
         }
 
@@ -62,7 +68,10 @@ public class DateValidator {
         // or equal to 30.
         if (m == 4 || m == 6
                 || m == 9 || m == 11) {
-            return (d <= 30);
+            if (!(d <= 30)){
+                sbMsg.append("dd/mm/yy is NOT correct date time!");
+                return true; 
+            }
         }
 
         return true;

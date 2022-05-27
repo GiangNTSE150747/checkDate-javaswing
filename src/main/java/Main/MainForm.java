@@ -8,6 +8,7 @@ package Main;
 import Helper.DataValidator;
 import Helper.DateValidator;
 import Helper.MessageDialogHelper;
+import Helper.validateIntInput;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -27,6 +28,7 @@ public final class MainForm extends javax.swing.JFrame {
         setTitle("Check date");  
         initComponents();
         affect();
+        this.setLocationRelativeTo(null);
     }
     
      public void affect() {
@@ -69,10 +71,13 @@ public final class MainForm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 153, 255));
         jLabel1.setText("Date Time Checker");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel2.setText("Day");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel3.setText("Month");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel4.setText("Year");
 
         jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\MyPC\\Desktop\\Summer 2022\\SWT301\\CheckDateDesktopApp\\src\\main\\Logo\\fpt-university-logo-B3B6D84292-seeklogo.com.png")); // NOI18N
@@ -98,24 +103,22 @@ public final class MainForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(71, 71, 71)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_day, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_year, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_month, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(11, 11, 11)
                                 .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(60, 60, 60)
-                                .addComponent(btnCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(47, 47, 47)
-                        .addComponent(txt_day, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(71, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -129,11 +132,11 @@ public final class MainForm extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txt_day, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_day, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_month, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -157,24 +160,41 @@ public final class MainForm extends javax.swing.JFrame {
         txt_year.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
 
-    private void btnCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckActionPerformed
-        StringBuilder sb = new StringBuilder();
-        DataValidator.validataEmpty(txt_day, sb, "Day cannot empty!");
-        DataValidator.validataEmpty(txt_month, sb, "Month cannnot empty!");
-        DataValidator.validataEmpty(txt_year, sb, "Year cannot empty!");
-        if (sb.length() > 0) {
-            MessageDialogHelper.ShowErrorDialog(this, sb.toString(), "Error");
-            return;
+    private boolean checkExistError(StringBuilder sbError){
+        if (sbError.length() > 0) {
+            MessageDialogHelper.ShowErrorDialog(this, sbError.toString(), "Error");
+            return true;
         }
         
-        boolean validate = DateValidator.isValidDate(Integer.parseInt(txt_day.getText()),Integer.parseInt(txt_month.getText()), Integer.parseInt(txt_year.getText()), sb);
+        return false;
+    }
+    
+    private void btnCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckActionPerformed
+        StringBuilder sbError = new StringBuilder();
+        StringBuilder sbMsg = new StringBuilder();
+        
+        //Validate empty input
+        DataValidator.validataEmpty(txt_day, sbError, "Day cannot empty!");
+        DataValidator.validataEmpty(txt_month, sbError, "Month cannnot empty!");
+        DataValidator.validataEmpty(txt_year, sbError, "Year cannot empty!");
+        
+        if(checkExistError(sbError)) return;
+        
+        //Validate not a number input
+        validateIntInput.ValidateInputInt(txt_day.getText(), "Input data for Day is incorrect format!" , sbError);
+        validateIntInput.ValidateInputInt(txt_month.getText(), "Input data for Month is incorrect format!" , sbError);
+        validateIntInput.ValidateInputInt(txt_year.getText(), "Input data for Year is incorrect format!" , sbError);
+        
+        if(checkExistError(sbError)) return;
+        
+        boolean validate = DateValidator.isValidDate(Integer.parseInt(txt_day.getText()),Integer.parseInt(txt_month.getText()), Integer.parseInt(txt_year.getText()), sbError, sbMsg);
         
         if (!validate) {
-            MessageDialogHelper.ShowErrorDialog(this, sb.toString(), "Error");
+            MessageDialogHelper.ShowErrorDialog(this, sbError.toString(), "Error");
         }
         
-        if(sb.length() == 0){
-            MessageDialogHelper.ShowMessageDialog(this, "dd/mm/yy is correct date time!", "Message");
+        if(sbError.length() == 0){           
+            MessageDialogHelper.ShowMessageDialog(this, (sbMsg.length() == 0)?"dd/mm/yy is correct date time!":sbMsg.toString(), "Message");
         }
     }//GEN-LAST:event_btnCheckActionPerformed
 
