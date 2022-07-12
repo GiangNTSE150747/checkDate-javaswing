@@ -15,7 +15,7 @@ public class DateValidator {
 
     // Returns true if
     // given year is valid.
-     static boolean isLeap(int year) {
+    public static boolean isLeap(int year) {
         // Return true if year is
         // a multiple of 4 and not
         // multiple of 100.
@@ -27,9 +27,17 @@ public class DateValidator {
 
     // Returns true if given
     // year is valid or not.
-    public static boolean isValidDate(int d,
-            int m,
-            int y, StringBuilder sb, StringBuilder sbMsg) {
+    public static boolean isValidDate(String day,
+            String month,
+            String year, StringBuilder sb, StringBuilder sbMsg) {
+        int d,m,y;
+        try {
+            d = Integer.parseInt(day);
+            m = Integer.parseInt(month);
+            y = Integer.parseInt(year);
+        } catch (Exception e) {
+            return false;
+        }
         // If year, month and day
         // are not in given range
         if (y > MAX_VALID_YR

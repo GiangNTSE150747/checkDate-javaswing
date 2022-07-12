@@ -61,7 +61,6 @@ public final class MainForm extends javax.swing.JFrame {
         txt_day = new javax.swing.JTextField();
         txt_year = new javax.swing.JTextField();
         txt_month = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         btnCheck = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
 
@@ -79,8 +78,6 @@ public final class MainForm extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel4.setText("Year");
-
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\MyPC\\Desktop\\Summer 2022\\SWT301\\CheckDateDesktopApp\\src\\main\\Logo\\fpt-university-logo-B3B6D84292-seeklogo.com.png")); // NOI18N
 
         btnCheck.setText("Check");
         btnCheck.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +98,7 @@ public final class MainForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -119,18 +116,12 @@ public final class MainForm extends javax.swing.JFrame {
                                 .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(60, 60, 60)
                                 .addComponent(btnCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(71, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(53, 53, 53)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -148,7 +139,7 @@ public final class MainForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCheck, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(36, 36, 36))
+                .addGap(52, 52, 52))
         );
 
         pack();
@@ -187,7 +178,7 @@ public final class MainForm extends javax.swing.JFrame {
         
         if(checkExistError(sbError)) return;
         
-        boolean validate = DateValidator.isValidDate(Integer.parseInt(txt_day.getText()),Integer.parseInt(txt_month.getText()), Integer.parseInt(txt_year.getText()), sbError, sbMsg);
+        boolean validate = DateValidator.isValidDate(txt_day.getText(),txt_month.getText(), txt_year.getText(), sbError, sbMsg);
         
         if (!validate) {
             MessageDialogHelper.ShowErrorDialog(this, sbError.toString(), "Error");
@@ -240,7 +231,6 @@ public final class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txt_day;
     private javax.swing.JTextField txt_month;
     private javax.swing.JTextField txt_year;

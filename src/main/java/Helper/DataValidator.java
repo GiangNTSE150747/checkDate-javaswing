@@ -6,6 +6,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class DataValidator {
+    
     public static void validataEmpty(JTextField field, StringBuilder sb, String errorMessage){
         if(field.getText().equals("")){
             sb.append(errorMessage).append("\n");
